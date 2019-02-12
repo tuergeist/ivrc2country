@@ -13,5 +13,5 @@ class TestIVRCListings(unittest.TestCase):
     def test_by_iso(self):
         table = ivrc2country.ivrc_by_iso3166
 
-        self.assertEqual(table["DE"].political_name, "Germany")
+        self.assertEqual(table["DEU"].ivrc, "D")
         self.assertTrue(len(table) > 100)

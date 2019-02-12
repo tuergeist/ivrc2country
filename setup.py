@@ -9,7 +9,7 @@ setuptools.setup(
     version="0.0.1",
     author="Christoph Becker",
     author_email="mail@ch-becker.de",
-    description="Converts international vehicle license codes to 2-letter ISO3166 country codes",
+    description="Converts international vehicle license codes to 3-letter ISO3166-1 alpha-3 country codes",
     long_description=long_description,
     long_description_content_type="text/markdown",
     url="https://github.com/tuergeist/ivrc2country",
@@ -19,4 +19,5 @@ setuptools.setup(
         "License :: OSI Approved :: MIT License",
         "Operating System :: OS Independent",
     ],
+    test_suite="tests",
 )

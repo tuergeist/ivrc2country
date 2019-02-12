@@ -6,10 +6,10 @@ from ivrc2country import ivrcodes
 class TestIVRCLookup(unittest.TestCase):
     def test_germany(self):
         r = ivrcodes.get('D')
-        self.assertEqual(r.iso3166, 'DE')
+        self.assertEqual(r.iso3166, 'DEU')
 
     def test_germany_reverse(self):
-        r = ivrcodes.get_for_country('DE')
+        r = ivrcodes.get_for_country('DEU')
         self.assertEqual(r.ivrc, 'D')
 
     def test_no_match(self):
