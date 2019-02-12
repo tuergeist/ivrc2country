@@ -1,14 +1,10 @@
-from pprint import pprint
-
-import pytest
-from bs4 import BeautifulSoup
+"""
+Internal use only
+Grab data from wikipedia and write records to file
+"""
+import re
 import urllib.request
 
-url = 'https://de.wikipedia.org/wiki/Liste_der_Kfz-Nationalit%C3%A4tszeichen'
-url = 'https://de.wikipedia.org/w/index.php?title=Liste_der_Kfz-Nationalit%C3%A4tszeichen&action=edit&section=3'
-
-
-import re
 
 class SignParser:
     SPECIALS = {
@@ -24,7 +20,6 @@ class SignParser:
         self.countrycode = None
 
     def __get_clean_line_parts(self, nr):
-        # return [s.replace('*', '').replace(' ', '').replace('{', '').replace('}', '').strip() for s in self.lines[nr].split('|')]
         return [self.regex.sub('', s) for s in self.lines[nr].split('|')]
 
     def is_not_official(self):
@@ -56,7 +51,6 @@ class SignParser:
         if self.is_not_official() and len(self.countrycode) != 3:
             self.countrycode = ''
 
-
     def parse(self):
         lines = len(self.lines)
         if lines == 1 and self.lines[0]:
@@ -73,16 +67,15 @@ class SignParser:
             return self.sign, self.countrycode
 
 
-
 def main():
+    url = 'https://de.wikipedia.org/w/index.php?title=Liste_der_Kfz-Nationalit%C3%A4tszeichen&action=edit&section=3'
     local_filename, headers = urllib.request.urlretrieve(url)
     html = open(local_filename, 'r')
     txt = html.read()
     html.close()
 
-    with open('ivrc2country/records.py', 'w') as outfile:
+    with open('ivrc2country/records', 'w') as outfile:
         outfile.write('## auto-generated ##\n')
-        outfile.write('from ivrc2country import IVRCode\n')
         outfile.write('\nrecords = [\n')
 
         start = False
@@ -104,11 +97,8 @@ def main():
                 if line == '|-':  # parse old
                     if lines:
                         r = SignParser(lines).parse()
-                        print(f"\tIVRCode{r},")
                         outfile.write(f"\tIVRCode{r},\n")
                     lines = []
                 else:
                     lines.append(line)
         outfile.write(']\n')
-#main()
-
