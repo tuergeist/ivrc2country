@@ -15,3 +15,8 @@ class TestIVRCListings(unittest.TestCase):
 
         self.assertEqual(table["DEU"].ivrc, "D")
         self.assertTrue(len(table) > 100)
+
+    def test_iso3_is_3letter_only(self):
+        table = ivrc2country.ivrcodes
+        for pair in table:
+            self.assertTrue(len(pair[1]) in (0,3), pair)
