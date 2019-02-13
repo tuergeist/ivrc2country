@@ -6,7 +6,7 @@ with open("README.md", "r") as fh:
 
 setuptools.setup(
     name="ivrc2country",
-    version="0.1.0",
+    version="0.1.2",
     author="Christoph Becker",
     author_email="tuergeist@gmail.com",
     description="Converts international vehicle license codes to 3-letter ISO3166-1 alpha-3 country codes",

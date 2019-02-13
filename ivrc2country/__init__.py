@@ -4,6 +4,8 @@ from collections import namedtuple
 
 IVRCode = namedtuple('IVRCode',
                      'ivrc iso3166')  # 3-letter iso3166-1
+
+
 records = [
 	IVRCode('A', 'AUT'),
 	IVRCode('AFG', 'AFG'),
@@ -76,7 +78,7 @@ records = [
 	IVRCode('GBJ', 'JEY'),
 	IVRCode('GBM', 'IMN'),
 	IVRCode('GBZ', 'GIB'),
-	IVRCode('GCAGT', 'GTM'),
+	IVRCode('GCA', 'GTM'),
 	IVRCode('GE', 'GEO'),
 	IVRCode('GH', 'GHA'),
 	IVRCode('GQ', 'GNQ'),
@@ -130,13 +132,12 @@ records = [
 	IVRCode('MW', 'MWI'),
 	IVRCode('MYA', 'MMR'),
 	IVRCode('N', 'NOR'),
-	IVRCode('NA', 'ANT'),
 	IVRCode('NAM', 'NAM'),
 	IVRCode('NAU', 'NRU'),
 	IVRCode('NCL', 'NCL'),
 	IVRCode('NEP', 'NPL'),
 	IVRCode('NGR', 'NGA'),
-	IVRCode('NI', 'NIR'),
+	IVRCode('NI', 'GBR'),
 	IVRCode('NIC', 'NIC'),
 	IVRCode('NL', 'NLD'),
 	IVRCode('NZ', 'NZL'),
@@ -147,7 +148,6 @@ records = [
 	IVRCode('PE', 'PER'),
 	IVRCode('PK', 'PAK'),
 	IVRCode('PL', 'POL'),
-	#IVRCode('PMR', ''),  # Transnistrien unofficial
 	IVRCode('PNG', 'PNG'),
 	IVRCode('PRI', 'PRI'),
 	IVRCode('PY', 'PRY'),
@@ -162,7 +162,6 @@ records = [
 	IVRCode('RH', 'HTI'),
 	IVRCode('RI', 'IDN'),
 	IVRCode('RIM', 'MRT'),
-	IVRCode('RKS', 'KOS'),
 	IVRCode('RL', 'LBN'),
 	IVRCode('RM', 'MDG'),
 	IVRCode('RMM', 'MLI'),

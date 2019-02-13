@@ -8,14 +8,21 @@ import urllib.request
 
 class SignParser:
     SPECIALS = {
+        # country code found: country code real
         'Alderney': 'GGY',  # https://www.iso.org/obp/ui/#iso:code:3166:GG
         'Malteserorden': 'MLT',  # is Malta
+        'NIR': 'GBR',  # North Ireland belongs to GBR https://www.iso.org/obp/ui/#iso:code:3166:GB
     }
+
+    SKIP_SIGNS = [  # skip historic codes w/o any actual iso3166-1 alpha 3 code
+        'NA',   # Netherlands Antilles https://www.iso.org/obp/ui/#iso:code:3166:AN
+        'RKS',  # Kosovo no code assigned yet
+    ]
 
     def __init__(self, lines: list):
         assert isinstance(lines, list)
         self.lines = lines
-        self.regex = re.compile('[^a-zA-Z]')
+        self.regex = re.compile('[^a-zA-Z\+]')
         self.sign = None
         self.countrycode = None
 
@@ -33,7 +40,7 @@ class SignParser:
             self.sign = parts[1]
             self.countrycode = parts[3]
         except IndexError:
-            print('ERRROR', self.lines)
+            raise Exception('ERROR parsing: ', self.lines)
 
     def _parse_twoliner(self):
         p0 = self.__get_clean_line_parts(0)
@@ -41,15 +48,20 @@ class SignParser:
         self.sign = p0[-1]
         self.countrycode = p1[1]
 
-    def _parse_multi(self):
-        self._parse_twoliner()
+    def _handle_specials(self):
+        # check for multiple signs, e.g., GCA+GT
+        # use first entry only
+        if self.sign.find('+') > 0:
+            self.sign = self.sign.split('+')[0]
 
         # map specials
         if self.countrycode in self.SPECIALS:
             self.countrycode = self.SPECIALS[self.countrycode]
-        # if there is no countrycode and the sing is not official, skip country
-        if self.is_not_official() and len(self.countrycode) != 3:
-            self.countrycode = ''
+
+        # if there is no countrycode and the sing is not official, do not return data
+        if (self.is_not_official() and len(self.countrycode) != 3) or \
+                self.sign in self.SKIP_SIGNS:
+            self.sign = None
 
     def parse(self):
         lines = len(self.lines)
@@ -57,12 +69,10 @@ class SignParser:
             # all in one
             self._parse_oneliner()
 
-        elif lines == 2:
+        elif lines >= 2:
             self._parse_twoliner()
 
-        elif lines > 2:
-            self._parse_multi()
-
+        self._handle_specials()
         if self.sign:
             return self.sign, self.countrycode
 
@@ -97,7 +107,8 @@ def main():
                 if line == '|-':  # parse old
                     if lines:
                         r = SignParser(lines).parse()
-                        outfile.write(f"\tIVRCode{r},\n")
+                        if r:
+                            outfile.write(f"\tIVRCode{r},\n")
                     lines = []
                 else:
                     lines.append(line)
