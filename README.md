@@ -1,7 +1,7 @@
 # International Vehicle Registration Codes to ISO3166 3-letter Country code converter
 
 Standalone license plate country code converter. 
-Based on a International Vehicle Registration Code, i.e., 'D' for Germany, it will return 'DE' 
+Based on a International Vehicle Registration Code, i.e., 'D' for Germany, it will return 'DEU' 
 as 3-letter ISO3166-1 alpha-3 code.
 
 
