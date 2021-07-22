@@ -223,6 +223,7 @@ records = [
 	IVRCode('WV', 'VCT'),
 	IVRCode('YEM', 'YEM'),
 	IVRCode('YV', 'VEN'),
+	IVRCode('YU', 'YUG'),
 	IVRCode('Z', 'ZMB'),
 	IVRCode('ZA', 'ZAF'),
 ]
